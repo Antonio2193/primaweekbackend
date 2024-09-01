@@ -4,7 +4,7 @@ GET {{baseUrl}}
 
 ###
 
-GET {{baseUrl}}/66d48f77fb76cfc4aa412cg4
+GET {{baseUrl}}/66d48f77fb76cfc4aa412b46
 
 ###
 
@@ -19,15 +19,15 @@ Content-Type: application/json
 
 ###
 
-PUT  {{baseUrl}}/66d48e54fb76cfc4aa412b44
+PUT  {{baseUrl}}/66d49ad7afc4f99252a9535f
 Content-Type: application/json
 
-{"name": "Antonio",
- "surname": "Fedele",
- "email": "asdf@asdf.com",
- "avatar": ""
+{"name": "Pinco",
+ "surname": "Pallone",
+ "email": "qwer@qwer.com",
+ "avatar": "https://picsum.photos/40"
 }
 
 ###
 
-DELETE  {{baseUrl}}/66d493f5de62a653642faa12
+DELETE  {{baseUrl}}/66d49ad7afc4f99252a9535f
