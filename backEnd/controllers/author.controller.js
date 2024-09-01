@@ -56,3 +56,14 @@ export const deleteAuthor = async (req, res) => {
         res.status(400).send({ message: `Author ${id} not found` });
     }
 }
+
+export const patchAuthor = async (req, res) => {
+    const { authorId } = req.params;
+    try {
+        const author = await Author.findByIdAndUpdate(authorId, {avatar: req.file.path}, {new: true});
+        await author.save();
+        res.status(200).send(author);
+    } catch (error) {
+        res.status(400).send({ message: error.message });
+    }
+}

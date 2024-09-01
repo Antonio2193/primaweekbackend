@@ -1,9 +1,23 @@
 import Post from "../models/postSchema.js";
 
 export const getPosts = async (req, res) => {
+    const page = req.query.page || 1
+    let perPage = req.query.perPage || 8
+    perPage = perPage > 10 ? 8 : perPage
     try {
-        const posts = await Post.find(req.query.title ? {title: {$regex: req.query.title, $options: "i"}}:{});
-        res.status(200).send(posts);
+        const posts = await Post.find(req.query.title ? {title: {$regex: req.query.title, $options: "i"}}:{})
+        .collation({locale: 'it'}) //serve per ignorare maiuscole e minuscole nell'ordine alfabetico del sort
+        .sort({ title:1, category:1})
+        .skip((page-1)*perPage)
+        .limit(perPage)
+        const totalResults = await Post.countDocuments()// mi da il numero totale di documenti
+        const totalPages = Math.ceil(totalResults / perPage ) 
+        res.send({
+            dati: posts,
+            page,
+            totalPages,
+            totalResults,
+        })
     } catch (error) {
         res.status(404).send({ message: "Posts not found" });
     } 
@@ -54,5 +68,16 @@ export const deletePost = async (req, res) => {
         }
     } catch (error) {
         res.status(400).send({ message: `Post ${id} not found` });
+    }
+}
+
+export const patchPost = async (req, res) => {
+    const { blogPostId } = req.params;
+    try {
+        const post = await Post.findByIdAndUpdate(blogPostId, {cover: req.file.path}, {new: true});
+        await post.save();
+        res.status(200).send(post);
+    } catch (error) {
+        res.status(400).send({ message: error.message });
     }
 }
