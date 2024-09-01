@@ -1,0 +1,48 @@
+@baseUrl=http://localhost:5000/api/v1/blogPosts
+
+GET {{baseUrl}}
+
+###
+
+GET {{baseUrl}}/66d4a4a1a35baa9c248619a6
+
+###
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{"category": "Studio",
+ "title": "Un bel corso",
+ "cover": "",
+ "readTime": {
+    "value" : 10,
+    "unit": "min"
+ },
+ "author": "66d48f77fb76cfc4aa412b46",
+ "content": "bhuiuefaiu kjbacu viguygknbv abiugcd ahgjhvdv sakbjv lkncasghcskjacsnahcsiu"
+}
+
+###
+
+PUT  {{baseUrl}}/66d4a504a35baa9c248619aa
+Content-Type: application/json
+
+{"category": "Studio",
+ "title": "Un bellissimo corso",
+ "cover": "",
+ "readTime": {
+    "value" : 15,
+    "unit": "min"
+ },
+ "author": "66d48f77fb76cfc4aa412b46",
+ "content": "bhuiuefaiu kjbacu viguygknbv abiugcd ahgjhvdv sakbjv lkncasghcskjacsnahcsiu hfihi vhiirvy"
+}
+
+
+###
+
+DELETE  {{baseUrl}}/66d4a504a35baa9c248617gf
+
+###
+
+GET http://localhost:5000/api/v1/blogPosts?title=viaggio
