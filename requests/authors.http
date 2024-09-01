@@ -1,0 +1,33 @@
+@baseUrl=http://localhost:5000/api/v1/authors
+
+GET {{baseUrl}}
+
+###
+
+GET {{baseUrl}}/66d48f77fb76cfc4aa412cg4
+
+###
+
+POST {{baseUrl}}
+Content-Type: application/json
+
+{"name": "Pinco",
+ "surname": "Pallino",
+ "email": "qwer@qwer.com",
+ "avatar": ""
+}
+
+###
+
+PUT  {{baseUrl}}/66d48e54fb76cfc4aa412b44
+Content-Type: application/json
+
+{"name": "Antonio",
+ "surname": "Fedele",
+ "email": "asdf@asdf.com",
+ "avatar": ""
+}
+
+###
+
+DELETE  {{baseUrl}}/66d493f5de62a653642faa12
