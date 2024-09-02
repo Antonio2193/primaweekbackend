@@ -1,4 +1,5 @@
 import Post from "../models/postSchema.js";
+import transport from "../services/mailService.js";
 
 export const getPosts = async (req, res) => {
     const page = req.query.page || 1
@@ -28,6 +29,13 @@ export const createPost = async (req, res) => {
     post.cover = post.cover ? post.cover : "https://picsum.photos/200/300";
     try {
         const newPost = await post.save();
+        await transport.sendMail({
+            from: 'noreply@joker.com', // sender address
+            to: newPost.author, // list of receivers
+            subject: "New Post", // Subject line
+            text: "You have created a new post", // plain text body
+            html: "<b>You have created a new post</b>", // html body
+        })
         res.status(200).send(newPost);
     } catch (error) {
         res.status(400).send({ message: error.message });
@@ -51,6 +59,7 @@ export const editPost = async (req, res) => {
         const post = await Post.findByIdAndUpdate(id, req.body , {new: true});
         post.cover = post.cover ? post.cover : "https://picsum.photos/200/300";
         await post.save();
+
         res.status(200).send(post);
     } catch (error) {
         res.status(400).send({ message: error.message });

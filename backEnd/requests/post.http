@@ -11,15 +11,15 @@ GET {{baseUrl}}/66d4a4a1a35baa9c248619a6
 POST {{baseUrl}}
 Content-Type: application/json
 
-{"category": "Studio",
- "title": "Un bel corso",
+{"category": "Categoria 3",
+ "title": "Abcd",
  "cover": "",
  "readTime": {
     "value" : 10,
     "unit": "min"
  },
- "author": "66d48f77fb76cfc4aa412b46",
- "content": "bhuiuefaiu kjbacu viguygknbv abiugcd ahgjhvdv sakbjv lkncasghcskjacsnahcsiu"
+ "author": "zxcv@gmail.com",
+ "content": "kjbfhbuerbw  werh iucwiuh iwiugwe iuiuw egiu gweiug iugweriug iuwg"
 }
 
 ###

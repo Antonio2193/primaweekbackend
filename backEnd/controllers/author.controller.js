@@ -1,9 +1,23 @@
 import Author from "../models/authorSchema.js";
 
 export const getAuthors = async (req, res) => {
+    const page = req.query.page || 1
+    let perPage = req.query.perPage || 8
+    perPage = perPage > 10 ? 8 : perPage
     try {
-        const authors = await Author.find();
-        res.status(200).send(authors);
+        const authors = await Author.find(req.query.name ? {name: {$regex: req.query.name, $options: "i"}}:{})
+        .collation({locale: 'it'}) //serve per ignorare maiuscole e minuscole nell'ordine alfabetico del sort
+        .sort({ name:1, surname:1})
+        .skip((page-1)*perPage)
+        .limit(perPage);
+        const totalResults = await Author.countDocuments()// mi da il numero totale di documenti
+        const totalPages = Math.ceil(totalResults / perPage )
+        res.send({
+            dati: authors,
+            page,
+            totalPages,
+            totalResults,
+        })
     } catch (error) {
         res.status(404).send({ message: "Authors not found" });
     } 
