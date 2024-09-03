@@ -6,7 +6,8 @@ import postRoute from './routes/postRoute.js';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
-
+import authenticationRouter from './routes/authenticationRoutes.js';
+/* import passport from 'passport'; */
 
 const server = express();
 const port = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ server.use(morgan('dev')) //middleware che mostra tutti i log delle richieste
 server.use(helmet()) //middleware che ci da la sicurezza per il BE
 server.use('/api/v1/authors', authorRoute)
 server.use('/api/v1/blogPosts', postRoute)
+server.use('/api/v1/auth', authenticationRouter)
 
 
 
