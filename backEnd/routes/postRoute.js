@@ -6,7 +6,7 @@ import uploadCloudinary from '../middleware/uploadCloudinary.js';
 const router = express.Router();
 router.get('/', getPosts )
 
-router.post('/', createPost)
+router.post('/', uploadCloudinary.single('cover'), createPost)
 
 router.get('/:id', getSinglePost)
 

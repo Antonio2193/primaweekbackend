@@ -6,7 +6,7 @@ import uploadCloudinary from '../middleware/uploadCloudinary.js';
 const router = express.Router();
 router.get('/', getAuthors )
 
-router.post('/', createAuthor)
+router.post('/', uploadCloudinary.single('avatar'), createAuthor)
 
 router.get('/:id', getSingleAuthor)
 

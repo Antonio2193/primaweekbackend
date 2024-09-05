@@ -12,13 +12,13 @@ POST {{baseUrl}}
 Content-Type: application/json
 
 {"category": "Categoria 3",
- "title": "Abcd",
+ "title": "un bel viaggio",
  "cover": "",
  "readTime": {
     "value" : 10,
     "unit": "min"
  },
- "author": "zxcv@gmail.com",
+ "author": "66d87cf21b95b043b606ff5d",
  "content": "kjbfhbuerbw  werh iucwiuh iwiugwe iuiuw egiu gweiug iugweriug iuwg"
 }
 

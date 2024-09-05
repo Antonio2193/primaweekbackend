@@ -13,7 +13,7 @@ export const register = async (req, res) => {
         surname: req.body.surname,
         email: req.body.email,
         password: await bcrypt.hash(req.body.password, 10),
-        avatar: req.body.avatar ? req.body.avatar : "https://picsum.photos/40/",
+        avatar: req.file ? req.file.path : "https://picsum.photos/40/",
         verifiedAt: new Date()
     });
 

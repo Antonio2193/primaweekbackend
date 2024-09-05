@@ -25,8 +25,8 @@ const postSchema = new Schema ({
         required: true
     },
     author : {
-        type: String,
-        ref: 'Author'
+        type: Schema.Types.ObjectId,
+        ref: 'AuthorR'
     }
 },
 {collection: 'posts'})

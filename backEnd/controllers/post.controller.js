@@ -1,44 +1,59 @@
 import Post from "../models/postSchema.js";
 import transport from "../services/mailService.js";
+import AuthorR from "../models/authorRegSchema.js";
+
 
 export const getPosts = async (req, res) => {
-    const page = req.query.page || 1
-    let perPage = req.query.perPage || 8
-    perPage = perPage > 10 ? 8 : perPage
+    const page = req.query.page || 1;
+    let perPage = req.query.perPage || 8;
+    perPage = perPage > 10 ? 8 : perPage;
+
     try {
-        const posts = await Post.find(req.query.title ? {title: {$regex: req.query.title, $options: "i"}}:{})
-        .collation({locale: 'it'}) //serve per ignorare maiuscole e minuscole nell'ordine alfabetico del sort
-        .sort({ title:1, category:1})
-        .skip((page-1)*perPage)
-        .limit(perPage)
-        const totalResults = await Post.countDocuments()// mi da il numero totale di documenti
-        const totalPages = Math.ceil(totalResults / perPage ) 
+        const posts = await Post.find(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {})
+            .collation({ locale: 'it' }) // Ignora maiuscole e minuscole nell'ordinamento
+            .sort({ title: 1, category: 1 })
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+            .populate('author', 'name avatar') // Popola i campi 'name' e 'avatar' dell'autore
+            .exec();
+
+        const totalResults = await Post.countDocuments(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {});
+        const totalPages = Math.ceil(totalResults / perPage);
+
         res.send({
             dati: posts,
             page,
             totalPages,
             totalResults,
-        })
+        });
     } catch (error) {
+        console.error('Error fetching posts:', error);
         res.status(404).send({ message: "Posts not found" });
-    } 
-}
+    }
+};
+
 
 export const createPost = async (req, res) => {
-    const post = new Post(req.body);
-    post.cover = post.cover ? post.cover : "https://picsum.photos/200/300";
+    const post = new Post({...req.body, cover: req.file.path, readTime:JSON.parse(req.body.readTime)});
+    let newPost 
     try {
-        const newPost = await post.save();
+        newPost = await post.save();
+        res.send(newPost)
+    } catch (error) {
+        return res.status(400).send({ message: error.message });
+    }
+
+    try {
+        const author = await AuthorR.findById(newPost.author);
         await transport.sendMail({
             from: 'noreply@joker.com', // sender address
-            to: newPost.author, // list of receivers
+            to: author.email, // list of receivers
             subject: "New Post", // Subject line
             text: "You have created a new post", // plain text body
             html: "<b>You have created a new post</b>", // html body
         })
-        res.status(200).send(newPost);
     } catch (error) {
-        res.status(400).send({ message: error.message });
+        console.log(error)
     }
 }
 
