@@ -3,8 +3,9 @@ import BlogList from "../../components/blog/blog-list/BlogList";
 import "./styles.css";
 import { useContext, useState, useEffect } from "react";
 import { AuthorContext } from "../../context/AuthorContextProvider";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { login } from "../../data/fetch";
+
 
 const Home = (props) => {
   let [searchParams, setSearchParams]=useSearchParams()
@@ -52,9 +53,13 @@ const Home = (props) => {
     <Container fluid="sm">
       <h1 className="blog-main-title mb-3">Benvenuto sullo Strive Blog!</h1>
       <>
-        {!token&&<Button variant="primary" onClick={handleShow}>
+        {!token&&<div><Button variant="primary" onClick={handleShow}>
           Login
-        </Button>}
+        </Button>
+        or
+        <Button variant="primary" as={Link} to ={'http://localhost:5000/api/v1/auth/login-google'}>
+          Login with google
+        </Button></div>}
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>LOGIN</Modal.Title>

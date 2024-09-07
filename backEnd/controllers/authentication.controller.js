@@ -50,3 +50,8 @@ export const login = async (req, res) => {
 export const me = async(req,res) =>{
     return res.send(req.loggedAuthor)
 }
+
+
+export const callbackGoogle = async (req, res) =>{
+    res.redirect(`http://localhost:3000?token=${req.user.jwtToken}`)
+}

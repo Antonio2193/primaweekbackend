@@ -11,6 +11,10 @@ const  commentSchema = new Schema ({
     post: {
         type: Schema.Types.ObjectId,
         ref: 'Post',
+    },
+    author : {
+        type: Schema.Types.ObjectId,
+        ref: 'AuthorR'
     }
 },
 {collection: 'comments',

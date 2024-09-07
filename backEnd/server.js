@@ -7,10 +7,12 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import authenticationRouter from './routes/authenticationRoutes.js';
-/* import passport from 'passport'; */
+import passport from 'passport';
+import googleStrategy from './config/passport.config.js';
 
 const server = express();
 const port = process.env.PORT || 5000;
+passport.use('google', googleStrategy);
 
 await mongoose
     .connect(process.env.MONGODB_CONNECTION)
