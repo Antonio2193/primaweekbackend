@@ -3,24 +3,25 @@
 
 ###
 
-GET {{baseUrl}}/66d4a4a1a35baa9c248619a6/comments
+GET {{baseUrl}}/66d9653c4350fa227dd2866c/comments
 
 ###
 
-GET {{baseUrl}}/66d4a4a1a35baa9c248619a6/comments/66d5ea9b42a3f057287dd5f8
+GET {{baseUrl}}/66d9653c4350fa227dd2866c/comments/66dd7fdbd422e9e0df0b436a
 
 ###
 
-POST {{baseUrl}}/66d4a4a1a35baa9c248619a6/comments
+POST {{baseUrl}}/66d9653c4350fa227dd2866c/comments
 Content-Type: application/json
  
 {
-    "content": "quinto commento"
+    "content": "settimo commento",
+    "author": "66d964c64350fa227dd2866a"
 } 
 
 ###
 
-PUT {{baseUrl}}/66d4a4a1a35baa9c248619a6/comment/66d5ea9b42a3f057287dd5f8
+PUT {{baseUrl}}/66d4a4a1a35baa9c248619a6/comment/
 Content-Type: application/json
  
 {

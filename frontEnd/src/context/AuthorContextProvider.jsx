@@ -21,7 +21,7 @@ export default function AuthorContextProvider({ children }) {
     if (token) getME()
   }
   , [token]);
-  const value = { token, setToken, authorInfo };
+  const value = { token, setToken, authorInfo, setAuthorInfo };
   return (
     <AuthorContext.Provider value={value}>{children}</AuthorContext.Provider>
   )

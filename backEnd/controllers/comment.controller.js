@@ -7,6 +7,7 @@ export const getComments = async (req,res)=>{
         const comments = await Comment.find({
             post: req.params.postId,
         }).populate('post',{title:1, _id:0})
+          .populate('author')
         res.send({
             dati: comments,
         })
@@ -17,7 +18,7 @@ export const getComments = async (req,res)=>{
 
 export const getSingleComment = async (req,res)=>{
     try {
-        const singleComment = await Comment.findOne({post: req.params.postId, _id: req.params.commentId})
+        const singleComment = await Comment.findOne({post: req.params.postId, _id: req.params.commentId}).populate('author')
         return res.status(200).send(singleComment) 
     } catch (error) {console.log(error)
        return res.status(404).send({message: 'Not Found'}) 

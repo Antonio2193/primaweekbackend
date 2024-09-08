@@ -9,6 +9,7 @@ import helmet from 'helmet';
 import authenticationRouter from './routes/authenticationRoutes.js';
 import passport from 'passport';
 import googleStrategy from './config/passport.config.js';
+import authorization from './middleware/authorization.js';
 
 const server = express();
 const port = process.env.PORT || 5000;
@@ -28,8 +29,8 @@ server.use(express.json()) // middleware che ci dice che tutti i body che inviam
 server.use(cors()) // per connettere BE al FE
 server.use(morgan('dev')) //middleware che mostra tutti i log delle richieste
 server.use(helmet()) //middleware che ci da la sicurezza per il BE
-server.use('/api/v1/authors', authorRoute)
-server.use('/api/v1/blogPosts', postRoute)
+server.use('/api/v1/authors', authorization, authorRoute)
+server.use('/api/v1/blogPosts',authorization, postRoute)
 server.use('/api/v1/auth', authenticationRouter)
 
 
