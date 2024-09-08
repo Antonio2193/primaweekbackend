@@ -150,3 +150,20 @@ export const updateComment = async (blogpostId, commentId, updatedCommentData) =
         },
       });
     }
+
+//fetch per modificare post
+/* export const editPost = async (postId, formValue) => {
+    const res = await fetch (`http://localhost:5000/api/v1/blogPosts/${postId}`, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            "Content-Type": "application/json"
+        },        
+        method: "PUT",
+        body: JSON.stringify(formValue)
+    })
+
+    
+    const data = await res.json()
+    return data
+    
+} */

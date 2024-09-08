@@ -7,9 +7,12 @@ import { loadPosts } from "../../../data/fetch";
 
 const BlogList = props => {
   const [posts, setPosts] = useState([]);
+  const [aggiornaBlogList, setAggiornaBlogList] = useState(false)
+
+
   useEffect(() => {
     loadPosts().then(data => setPosts(data.dati));
-  }, [])
+  }, [aggiornaBlogList]);
   return (
     <Row>
       {posts.map((post, i) => (
@@ -20,7 +23,7 @@ const BlogList = props => {
             marginBottom: 50,
           }}
         >
-          <BlogItem key={post.title} {...post} />
+          <BlogItem key={post.title} {...post} setAggiornaBlogList={setAggiornaBlogList} aggiornaBlogList={aggiornaBlogList}  />
         </Col>
       ))}
     </Row>
