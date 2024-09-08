@@ -1,13 +1,15 @@
 export const loadPosts = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/blogPosts', {headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-    }});
+    const res = await fetch('http://localhost:5000/api/v1/blogPosts', {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+    });
     const data = await res.json();
     return data;
 }
 
-export const loadComments = async (id) =>{
-    const res = await fetch (`http://localhost:5000/api/v1/blogPosts/${id}/comments`,{
+export const loadComments = async (id) => {
+    const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
@@ -16,7 +18,7 @@ export const loadComments = async (id) =>{
     return data
 }
 
-export const newPost = async (formValue,cover) =>{
+export const newPost = async (formValue, cover) => {
     const formData = new FormData()
     formData.append('cover', cover)
     formData.append('category', formValue.category)
@@ -24,20 +26,20 @@ export const newPost = async (formValue,cover) =>{
     formData.append('readTime', JSON.stringify(formValue.readTime))
     formData.append('author', formValue.author)
     formData.append('content', formValue.content)
-    const res= await fetch ('http://localhost:5000/api/v1/blogPosts', {
+    const res = await fetch('http://localhost:5000/api/v1/blogPosts', {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
-        },        
+        },
         method: "POST",
         body: formData
     })
-    const data = await res.json() 
+    const data = await res.json()
     return data
-} 
+}
 
 export const login = async (formValue) => {
     try {
-        const res = await fetch ('http://localhost:5000/api/v1/auth/login', {
+        const res = await fetch('http://localhost:5000/api/v1/auth/login', {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -47,20 +49,22 @@ export const login = async (formValue) => {
         if (res.ok) {
             const data = await res.json();
             return data;
-        }else{
+        } else {
             const errorData = await res.json();
-            return {error: errorData.message};
+            return { error: errorData.message };
         }
     } catch (error) {
-        return {error: error.message};
+        return { error: error.message };
     }
 }
 
 export const me = async () => {
     const res = await fetch('http://localhost:5000/api/v1/auth/me',
-        {headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }}
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
     );
     if (!res.ok) {
         throw new Error(res.status);
@@ -80,20 +84,20 @@ export const register = async (regFormValue, avatar) => {
     try {
         const res = await fetch('http://localhost:5000/api/v1/auth/register', {
             method: 'POST',
-            body:formData
+            body: formData
         })
         const data = await res.json();
         return data
     } catch (error) {
         console.log(error)
     }
-    
+
 }
 
 export const loadPost = async (paramsId) => {
     // carica un post specifico presente nel blog 
     console.log(paramsId)
-    const res = await fetch ('http://localhost:5000/api/v1/blogPosts/' + paramsId,{
+    const res = await fetch('http://localhost:5000/api/v1/blogPosts/' + paramsId, {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
@@ -103,67 +107,72 @@ export const loadPost = async (paramsId) => {
     return data
 }
 
-export const newComment = async (id, formValue) =>{
- 
-    const res= await fetch (`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
+export const newComment = async (id, formValue) => {
+
+    const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`,
             "Content-Type": "application/json"
-        },        
+        },
         method: "POST",
         body: JSON.stringify(formValue)
     })
-    const data = await res.json() 
+    const data = await res.json()
     return data
-} 
+}
 
 export const updateComment = async (blogpostId, commentId, updatedCommentData) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${blogpostId}/comment/${commentId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem('token')}`, // Invia il token JWT per autenticazione
-        },
-        body: JSON.stringify(updatedCommentData), // Il nuovo contenuto del commento
-      });
-  
-      if (!response.ok) {
-        throw new Error("Errore durante l'aggiornamento del commento");
-      }
-  
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Errore nell'update del commento:", error);
-      throw error;
-    }
-  };
+        const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${blogpostId}/comment/${commentId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`, // Invia il token JWT per autenticazione
+            },
+            body: JSON.stringify(updatedCommentData), // Il nuovo contenuto del commento
+        });
 
-  export const deleteComment = async (blogpostId, commentId) => {
-      const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${blogpostId}/comment/${commentId}`, {
+        if (!response.ok) {
+            throw new Error("Errore durante l'aggiornamento del commento");
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Errore nell'update del commento:", error);
+        throw error;
+    }
+};
+
+export const deleteComment = async (blogpostId, commentId) => {
+    const response = await fetch(`http://localhost:5000/api/v1/blogPosts/${blogpostId}/comment/${commentId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
             // Assicurati di avere il token corretto
         },
-      });
+    });
+}
+
+export const deletePost = async (postId) => {
+    try {
+        const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${postId}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+                "Content-Type": "application/json"
+            },
+            method: "DELETE",
+        })
+        if (res.ok) {
+            console.log(`Post con ID ${postId} eliminato con successo.`);
+        } else {
+            const errorData = await res.json()
+            console.error(`Errore: ${errorData.message}`);
+        }
+    } catch (error) {
+        console.error(`Errore durante l'eliminazione del post: ${error.message}`);
     }
+}
 
-//fetch per modificare post
-/* export const editPost = async (postId, formValue) => {
-    const res = await fetch (`http://localhost:5000/api/v1/blogPosts/${postId}`, {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`,
-            "Content-Type": "application/json"
-        },        
-        method: "PUT",
-        body: JSON.stringify(formValue)
-    })
 
-    
-    const data = await res.json()
-    return data
-    
-} */

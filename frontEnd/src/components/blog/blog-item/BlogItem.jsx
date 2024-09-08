@@ -6,6 +6,8 @@ import "./styles.css";
 import { AuthorContext } from "../../../context/AuthorContextProvider";
 import { Editor } from 'react-draft-wysiwyg';
 import {jwtDecode} from "jwt-decode"; // Fix jwtDecode import
+import { deletePost } from "../../../data/fetch";
+
 
 const BlogItem = (props) => {
   const { title, cover, author, _id, category, content, setAggiornaBlogList, aggiornaBlogList } = props; // Include all necessary props
@@ -64,6 +66,18 @@ const BlogItem = (props) => {
     }
   };
 
+  const handleDelete = async () =>{
+    try {
+      await deletePost(_id)
+      alert('Post deleted!')
+      setAggiornaBlogList(!aggiornaBlogList)
+      // navigate ('/')
+    } catch (error) {
+      console.error("Errore durante l'eliminazione del post:", error);
+      alert ('Unable to delete the post')
+    }
+  }
+
   return (
     <Card className="blog-card">
       <Link to={`/blog/${_id}`} className="blog-link">
@@ -74,6 +88,11 @@ const BlogItem = (props) => {
       </Link>
       <Card.Footer>
         <BlogAuthor {...author} />
+        {authorInfo._id === author._id && (
+          <Button variant="danger" className="ms-2" onClick={handleDelete}>
+            Delete
+          </Button>
+        )}
         {authorInfo._id === author._id && (
           <Button variant="success" className="ms-2" onClick={handleEditPost}>
             Edit
