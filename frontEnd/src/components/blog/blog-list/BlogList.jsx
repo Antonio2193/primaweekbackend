@@ -3,7 +3,7 @@ import { Col, Row, Form, Button } from "react-bootstrap";
 import BlogItem from "../blog-item/BlogItem";
 import { loadPosts } from "../../../data/fetch";
 import { AuthorContext } from "../../../context/AuthorContextProvider";
-import "./styles.css";
+import style from "./style.css";
 
 const BlogList = () => {
   const { token } = useContext(AuthorContext);
