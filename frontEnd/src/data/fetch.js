@@ -1,4 +1,4 @@
-export const loadPosts = async (search, page = 1, perPage = 8) => {
+export const loadPosts = async (search, page = 1, perPage = 9) => {
     const urlBase = 'http://localhost:5000/api/v1/blogPosts';
     const searchParam = search ? `&title=${search}` : '';
     const url = `${urlBase}?page=${page}&perPage=${perPage}${searchParam}`;

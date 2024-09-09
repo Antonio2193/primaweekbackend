@@ -6,7 +6,7 @@ import AuthorR from "../models/authorRegSchema.js";
 export const getPosts = async (req, res) => {
     const page = req.query.page || 1;
     let perPage = req.query.perPage || 8;
-    perPage = perPage > 10 ? 8 : perPage;
+    perPage = perPage > 10 ? 9 : perPage;
 
     try {
         const posts = await Post.find(req.query.title ? { title: { $regex: req.query.title, $options: "i" } } : {})
