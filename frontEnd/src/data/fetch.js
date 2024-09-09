@@ -1,12 +1,18 @@
-export const loadPosts = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/blogPosts', {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
-        }
+export const loadPosts = async (search, page = 1, perPage = 8) => {
+    const urlBase = 'http://localhost:5000/api/v1/blogPosts';
+    const searchParam = search ? `&title=${search}` : '';
+    const url = `${urlBase}?page=${page}&perPage=${perPage}${searchParam}`;
+  
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     });
+  
     const data = await res.json();
     return data;
-}
+  };
+  
 
 export const loadComments = async (id) => {
     const res = await fetch(`http://localhost:5000/api/v1/blogPosts/${id}/comments`, {
